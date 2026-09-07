@@ -61,6 +61,27 @@ test('registry install recovers while first-version package metadata propagates'
   assert.equal(waits, 2)
 })
 
+test('registry install recovers while a new version propagates into the package metadata', async () => {
+  const { retryRegistryInstall } = await helpers
+  let calls = 0
+  let waits = 0
+  const pendingInstall = {
+    status: 1,
+    stderr: 'npm error code ETARGET\nnpm error notarget No matching version found for @stackline/wcwidth@1.0.1.',
+    stdout: ''
+  }
+  const success = { status: 0, stderr: '', stdout: 'added 1 package' }
+  const result = await retryRegistryInstall(() => ++calls < 3 ? pendingInstall : success, {
+    packageName: '@stackline/wcwidth',
+    version: '1.0.1',
+    attempts: 3,
+    wait: async () => { waits++ }
+  })
+  assert.equal(result, success)
+  assert.equal(calls, 3)
+  assert.equal(waits, 2)
+})
+
 test('registry install retry is bounded and ignores unrelated failures', async () => {
   const { retryRegistryInstall } = await helpers
   const pendingInstall = {
@@ -86,6 +107,20 @@ test('registry install retry is bounded and ignores unrelated failures', async (
     wait: async () => assert.fail('unrelated failures must fail immediately')
   })
   assert.equal(failed, unrelated)
+  assert.equal(calls, 1)
+
+  const otherIdentity = {
+    status: 1,
+    stderr: 'npm error code ETARGET\nnpm error notarget No matching version found for @stackline/wcwidth@1.0.2.',
+    stdout: ''
+  }
+  calls = 0
+  const mismatched = await retryRegistryInstall(() => { calls++; return otherIdentity }, {
+    packageName: '@stackline/wcwidth',
+    version: '1.0.1',
+    wait: async () => assert.fail('another package identity ETARGET must fail immediately')
+  })
+  assert.equal(mismatched, otherIdentity)
   assert.equal(calls, 1)
 })
 

@@ -36,10 +36,16 @@ export async function retryRegistryInstall(operation, {
     if (result?.status === 0) return result
     const diagnostic = `${result?.stderr || ''}\n${result?.stdout || ''}`
     const normalizedDiagnostic = diagnostic.toLowerCase()
-    const pending = /\bE404\b/.test(diagnostic) && (
+    const missingPackage = /\bE404\b/.test(diagnostic) && (
       registryPaths.some((registryPath) => normalizedDiagnostic.includes(registryPath)) ||
       normalizedDiagnostic.includes(`requested resource '${identity}'`.toLowerCase())
     )
+    const missingVersion = `no matching version found for ${identity}`.toLowerCase()
+    const stalePackument = /\bETARGET\b/.test(diagnostic) && normalizedDiagnostic
+      .split(/\r?\n/)
+      .map((line) => line.trim().replace(/^npm error (?:notarget )?/, ''))
+      .some((line) => line === missingVersion || line === `${missingVersion}.`)
+    const pending = missingPackage || stalePackument
     if (!pending || attempt === attempts - 1) return result
     console.log('npm package metadata is still propagating; retrying registry install.')
     await wait()
