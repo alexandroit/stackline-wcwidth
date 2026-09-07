@@ -50,7 +50,7 @@ try {
   const internal = spawnSync(process.execPath, ['-e', [
     "try{require('@stackline/wcwidth/lib/width.js');process.exit(2)}",
     "catch(error){if(error.code!=='ERR_PACKAGE_PATH_NOT_EXPORTED')throw error}"
-  ].join(';')], {
+  ].join(' ')], {
     cwd: workspace,
     shell: process.platform === 'win32',
     encoding: 'utf8'
