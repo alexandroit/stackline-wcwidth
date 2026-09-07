@@ -1,0 +1,48 @@
+# @stackline/wcwidth@1.0.0
+
+Alexandro.Net documents `@stackline/wcwidth@1.0.0`, an independently maintained,
+dependency-free compatibility continuation of `wcwidth@1.0.1`.
+
+## Package identity
+
+- Documentation: https://alexandro.net/docs/vanilla/wcwidth/
+- Source: https://github.com/alexandroit/stackline-wcwidth
+- License: MIT with original wcwidth and Unicode attribution
+- Runtime: Node.js 18 or newer; modern browser bundlers
+- Production graph: one node, zero runtime, optional, peer, or bundled dependencies
+
+## API contract
+
+The CommonJS root is a callable `wcwidth` function with arity one. Its `config`
+property is enumerable; the additive `unicodeVersion` reference is
+non-enumerable. Native ESM provides an equivalent standalone function as its
+default plus named `config` and `unicodeVersion` exports.
+Conditional declarations cover CommonJS, ESM, TypeScript 3.9, and current
+TypeScript.
+
+The default configuration is `{ nul: 0, control: 0 }`. As in the upstream
+package, `config(options)` fills missing properties on the supplied object,
+observes inherited values, and retains the object so later mutation affects the
+configured function.
+
+## Unicode model
+
+Checksum-pinned Unicode 17.0.0 source data generates the width, emoji, and
+grapheme tables. Strings are decoded as Unicode scalar values and segmented by
+extended grapheme-cluster rules. Combining and zero-width characters occupy no
+columns; East Asian Wide and Fullwidth characters occupy two; Ambiguous values
+occupy one; and fully-qualified flags, keycaps, presentation sequences, and
+qualifying emoji ZWJ sequences occupy two columns per complete grapheme cluster.
+ANSI terminal escape sequences remain ordinary input and are not removed.
+
+## Migration
+
+Existing imports can remain unchanged through the exact alias:
+
+`wcwidth@npm:@stackline/wcwidth@1.0.0`
+
+Downstreams should run a clean install and their ordinary tests, types, build,
+and snapshot checks. Width snapshots containing emoji, combining text, CJK, or
+post-Unicode-5 characters should receive focused review. This replacement is
+independently maintained and is not affiliated with or endorsed by the original
+project or the Unicode Consortium.

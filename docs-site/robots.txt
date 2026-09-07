@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /docs/vanilla/wcwidth/
+
+Sitemap: https://alexandro.net/docs/vanilla/wcwidth/sitemap.xml

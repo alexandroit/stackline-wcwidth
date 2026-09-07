@@ -1,0 +1,16 @@
+{
+  "configuration": "wcwidth@1.0.1-compatible config object semantics",
+  "moduleFormats": [
+    "callable CommonJS",
+    "native ESM default and named exports",
+    "browser bundler"
+  ],
+  "name": "@stackline/wcwidth",
+  "productionDependencies": 0,
+  "runtimeFloor": "Node.js 18",
+  "terminalModel": "Unicode 17.0.0 extended grapheme clusters",
+  "types": "TypeScript 3.9 and modern conditional declarations",
+  "unicodeVersion": "17.0.0",
+  "upstreamBaseline": "wcwidth 1.0.1",
+  "version": "1.0.0"
+}

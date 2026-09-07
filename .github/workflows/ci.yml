@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['stackline-v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Tests, types, Unicode data, coverage, audits, closure, and package quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.20.0
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run verify
+      - run: node --test test/registry-verification.test.cjs
+      - name: Require verification to leave tracked and untracked source clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --exit-code
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
+      - run: mkdir artifact
+      - run: npm pack --ignore-scripts --pack-destination artifact
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a7 # v7.0.1
+        with:
+          name: npm-package
+          path: artifact/*.tgz
+          if-no-files-found: error
+          retention-days: 14
+
+  runtime:
+    name: Node.js ${{ matrix.node }} packed consumer
+    needs: quality
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18.20.8, 20.20.2, 22, 24, 26]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm-package
+          path: artifact
+      - run: node scripts/ci-packed-consumer.cjs artifact
+
+  platform:
+    name: ${{ matrix.os }} packed consumer
+    needs: quality
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.20.0
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm-package
+          path: artifact
+      - run: node scripts/ci-packed-consumer.cjs artifact
+
+  source-integrity:
+    name: Upstream attribution, pinned Unicode data, and root-only closure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: grep -F 'Copyright (c) 2026 Stackline maintainers' LICENSE
+      - run: grep -F 'Copyright (C) 2012 by Jun Woong.' THIRD_PARTY_LICENSES.md
+      - run: grep -F "complete upstream LICENSE notice must be reproduced verbatim" scripts/check-licenses.mjs
+      - run: grep -F 'Unicode License V3' THIRD_PARTY_LICENSES.md
+      - run: grep -F 'zero runtime, optional, peer, and bundled dependencies' THIRD_PARTY_LICENSES.md
+      - run: grep -F '17.0.0' unicode-sources.json

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dependency-free terminal column widths with Unicode 17 grapheme support and wcwidth compatibility.">
+  <title>@stackline/wcwidth | Alexandro.Net</title>
+  <link rel="canonical" href="https://alexandro.net/docs/vanilla/wcwidth/">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@stackline/wcwidth","version":"1.0.0","description":"Terminal column widths with Unicode 17 grapheme support and wcwidth compatibility.","codeRepository":"https://github.com/alexandroit/stackline-wcwidth","license":"https://opensource.org/license/mit","programmingLanguage":["JavaScript","TypeScript"],"runtimePlatform":"Node.js >=18; modern browsers","url":"https://alexandro.net/docs/vanilla/wcwidth/"}</script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to package documentation</a>
+  <header class="site-header">
+    <a class="wordmark" href="https://alexandro.net/" aria-label="Alexandro.Net home">Alexandro.Net</a>
+    <nav aria-label="Page navigation">
+      <a href="#install">Install</a>
+      <a href="#contract">Contract</a>
+      <a href="#unicode">Unicode</a>
+      <a href="#migration">Migration</a>
+    </nav>
+  </header>
+
+  <main id="content" tabindex="-1">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Maintained compatibility package</p>
+        <h1 id="page-title">@stackline/<span>wcwidth</span></h1>
+        <p class="lede">Measure terminal columns with a callable historical API, reproducible Unicode 17.0.0 tables, and grapheme-aware emoji widths.</p>
+        <a class="button" href="https://github.com/alexandroit/stackline-wcwidth">Browse source</a>
+      </div>
+      <aside class="facts" aria-label="Package facts">
+        <dl>
+          <div><dt>Version</dt><dd>1.0.0</dd></div>
+          <div><dt>Runtime</dt><dd>Node.js ≥18</dd></div>
+          <div><dt>Unicode</dt><dd>17.0.0</dd></div>
+          <div><dt>Formats</dt><dd>CJS · ESM · browser</dd></div>
+          <div><dt>Types</dt><dd>TypeScript 3.9+</dd></div>
+          <div><dt>Production graph</dt><dd>1 node · 0 dependencies</dd></div>
+          <div><dt>License</dt><dd>MIT</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section id="install" class="section" aria-labelledby="install-title">
+      <p class="eyebrow">Start here</p>
+      <h2 id="install-title">One callable width function</h2>
+      <div class="code-card">
+        <button type="button" data-copy-target="install-command" aria-label="Copy install command">Copy</button>
+        <!--email_off--><pre id="install-command"><code data-source-file="examples/install.sh">{{EXAMPLE_INSTALL}}</code></pre><!--/email_off-->
+      </div>
+      <div class="grid">
+        <article>
+          <h3>CommonJS</h3>
+          <pre><code data-source-file="examples/commonjs.cjs">{{EXAMPLE_COMMONJS}}</code></pre>
+        </article>
+        <article>
+          <h3>ES modules</h3>
+          <pre><code data-source-file="examples/esm.mjs">{{EXAMPLE_ESM}}</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="contract" class="section" aria-labelledby="contract-title">
+      <p class="eyebrow">Compatibility</p>
+      <h2 id="contract-title">Keep the API; make Unicode current</h2>
+      <div class="grid features">
+        <article><h3>Callable CommonJS</h3><p>The package root remains a function named <code>wcwidth</code> with one argument and no nested default property.</p></article>
+        <article><h3>Compatible configuration</h3><p><code>config({ nul, control })</code> preserves the historical defaults, object fill, inheritance, retained mutation, and control-width behavior.</p></article>
+        <article><h3>Native ESM and types</h3><p>A native ESM default plus named <code>config</code> and <code>unicodeVersion</code> exports have conditional TypeScript declarations.</p></article>
+        <article><h3>Root-only closure</h3><p>The production install contains one package node with zero runtime, optional, peer, or bundled dependencies.</p></article>
+      </div>
+      <p>The runnable CommonJS example above includes strict control-character configuration.</p>
+    </section>
+
+    <section id="unicode" class="section" aria-labelledby="unicode-title">
+      <p class="eyebrow">Deterministic data</p>
+      <h2 id="unicode-title">Unicode 17 by grapheme cluster</h2>
+      <div class="table-wrap">
+        <table>
+          <caption>Maintained terminal-width rules</caption>
+          <thead><tr><th scope="col">Input category</th><th scope="col">Columns</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Combining and zero-width characters</th><td>0</td></tr>
+            <tr><th scope="row">East Asian Wide and Fullwidth characters</th><td>2</td></tr>
+            <tr><th scope="row">East Asian Ambiguous characters</th><td>1</td></tr>
+            <tr><th scope="row">Flags, keycaps, emoji presentation and qualifying emoji ZWJ clusters</th><td>2 per grapheme cluster</td></tr>
+            <tr><th scope="row">Ordinary scalar values</th><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="callout">Generated tables come from checksum-pinned Unicode 17.0.0 sources. Results do not depend on the host Node.js ICU version.</p>
+    </section>
+
+    <section id="migration" class="section" aria-labelledby="migration-title">
+      <p class="eyebrow">Adoption</p>
+      <h2 id="migration-title">Keep the historical import key</h2>
+      <p>An npm alias lets existing <code>require('wcwidth')</code> imports remain unchanged.</p>
+      <div class="code-card">
+        <button type="button" data-copy-target="alias-code" aria-label="Copy npm alias">Copy</button>
+        <!--email_off--><pre id="alias-code"><code data-source-file="examples/legacy-alias.json">{{EXAMPLE_ALIAS}}</code></pre><!--/email_off-->
+      </div>
+      <p>Run a clean install and the downstream test, type, build, and snapshot suites. Review output containing emoji, combining text, CJK, or characters added after the historical Unicode tables.</p>
+    </section>
+
+    <section class="section evidence" aria-labelledby="evidence-title">
+      <p class="eyebrow">Release evidence</p>
+      <h2 id="evidence-title">What the package gate covers</h2>
+      <ul>
+        <li>Historical API characterization and reviewed full-BMP differential results.</li>
+        <li>Unicode grapheme and fully-qualified emoji conformance corpora, table invariants, and bounded stress cases.</li>
+        <li>CommonJS, ESM, browser bundling, npm alias, and TypeScript 3.9/current consumers.</li>
+        <li>Strict package/type lint, licenses, one-node closure, CycloneDX SBOM, audits, artifact identity, signatures, and provenance.</li>
+      </ul>
+      <p><a href="VERIFICATION.md">Verification guide</a> · <a href="COMPATIBILITY_CONTRACT.md">Full compatibility contract</a> · <a href="MIGRATION.md">Migration guide</a> · <a href="SECURITY.md">Security policy</a></p>
+    </section>
+
+    <section class="section attribution" aria-labelledby="attribution-title">
+      <h2 id="attribution-title">Independent maintenance and attribution</h2>
+      <p>This package is independently maintained and is not affiliated with or endorsed by Tim Oxley, Jun Woong, Markus Kuhn, the original project, or the Unicode Consortium. Original and Unicode attribution is preserved.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="https://alexandro.net/">Alexandro.Net</a>
+    <p>Open source package documentation. <a href="https://alexandro.net/">Return to the package registry</a>.</p>
+    <p class="copy-status" aria-live="polite"></p>
+  </footer>
+  <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# @stackline/wcwidth@1.0.0 on Alexandro.Net
+
+- Canonical documentation: https://alexandro.net/docs/vanilla/wcwidth/
+- Source: https://github.com/alexandroit/stackline-wcwidth
+- Upstream compatibility baseline: wcwidth@1.0.1
+- Runtime: Node.js 18 or newer and modern browser bundlers
+- Module formats: callable CommonJS and native ESM default and named exports
+- Types: TypeScript 3.9-compatible CommonJS and conditional modern declarations
+- Unicode model: checksum-pinned Unicode 17.0.0 extended grapheme clusters
+- Production closure: one root node and zero dependencies
+- License: MIT
+
+Identity-preserving npm alias:
+
+wcwidth@npm:@stackline/wcwidth@1.0.0
+
+The package preserves the historical callable function and config object
+semantics while correcting terminal widths with current Unicode data. Combining
+text may be zero-width within a cluster; East Asian Wide and Fullwidth values
+use two columns; flags, keycaps, presentation sequences, and qualifying emoji
+ZWJ sequences use two columns per grapheme cluster.

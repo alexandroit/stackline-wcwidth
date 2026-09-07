@@ -1,0 +1,7 @@
+node_modules/
+coverage/
+docs-site/dist/
+release-candidate/
+*.tgz
+.rollup-browser-*/
+*.tsbuildinfo

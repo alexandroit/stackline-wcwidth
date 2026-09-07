@@ -1,0 +1,149 @@
+{
+  "name": "@stackline/wcwidth",
+  "version": "1.0.0",
+  "description": "Terminal column widths with modern Unicode grapheme support and wcwidth compatibility",
+  "keywords": [
+    "terminal",
+    "unicode",
+    "width",
+    "wcwidth",
+    "grapheme",
+    "emoji"
+  ],
+  "license": "MIT",
+  "type": "commonjs",
+  "sideEffects": false,
+  "main": "./index.js",
+  "module": "./dist/index.mjs",
+  "types": "./index.d.ts",
+  "typings": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "browser": {
+        "import": "./dist/index.mjs",
+        "require": "./index.js",
+        "default": "./index.js"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./index.js": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./combining": {
+      "types": "./combining.d.ts",
+      "require": "./combining.js",
+      "default": "./combining.js"
+    },
+    "./combining.js": {
+      "types": "./combining.d.ts",
+      "require": "./combining.js",
+      "default": "./combining.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.cts",
+    "index.d.mts",
+    "combining.js",
+    "combining.d.ts",
+    "dist",
+    "lib",
+    "tools",
+    "examples",
+    "scripts/test-package.mjs",
+    "CHANGELOG.md",
+    "COMPATIBILITY.md",
+    "COMPATIBILITY_CONTRACT.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "MIGRATION.md",
+    "NOTICE",
+    "PUBLISHING.md",
+    "README.md",
+    "SECURITY.md",
+    "THIRD_PARTY_LICENSES.md",
+    "VERIFICATION.md",
+    "unicode-sources.json"
+  ],
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "node scripts/build.mjs",
+    "lint": "eslint index.js index.mjs lib scripts test examples docs-site/*.js docs-site/*.mjs",
+    "docs:prepare": "node docs-site/prepare.mjs",
+    "docs:check": "node docs-site/check.mjs",
+    "unicode:generate": "node tools/generate-unicode-tables.mjs",
+    "unicode:check": "node tools/generate-unicode-tables.mjs --check",
+    "test:source": "npm run test:core && npm run test:release-helpers && npm run test:browser && npm run test:types",
+    "test:core": "node --test test/*.test.js",
+    "test:release-helpers": "node --test test/registry-verification.test.cjs",
+    "test:browser": "node scripts/check-browser.mjs",
+    "test:types": "tsc -p test/types/modern/tsconfig.json && node node_modules/typescript-3-9/bin/tsc -p test/types/legacy/tsconfig.json --typeRoots ./test/types/no-global-types",
+    "test": "node scripts/test-package.mjs",
+    "test:coverage": "c8 --all --include=index.js --include=lib/*.js --exclude=lib/unicode-tables.js --check-coverage --lines 95 --functions 95 --branches 90 node --test test/*.test.js",
+    "test:smoke": "node scripts/smoke-install.mjs",
+    "test:closure": "node scripts/check-production-closure.mjs",
+    "check:package": "publint --strict && attw --pack .",
+    "check:licenses": "node scripts/check-licenses.mjs",
+    "check:sbom": "node scripts/check-sbom.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "evidence:assemble": "node scripts/assemble-release-assets.mjs",
+    "evidence:check": "node scripts/check-release-assets.mjs",
+    "pack:check": "npm pack --dry-run",
+    "audit:dependencies": "npm audit --omit=dev --audit-level=low",
+    "audit:all": "npm audit --audit-level=low",
+    "audit:signatures": "npm audit signatures",
+    "verify": "npm run clean && npm run lint && npm run build && npm run docs:prepare && npm run docs:check && npm run unicode:check && npm test && npm run test:coverage && npm run test:smoke && npm run test:closure && npm run check:package && npm run check:licenses && npm run check:sbom && npm run check:release && npm run pack:check && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
+    "artifact:prepare": "node scripts/create-artifact.mjs",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@eslint/js": "10.0.1",
+    "@rollup/plugin-node-resolve": "16.0.3",
+    "c8": "12.0.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.9.1",
+    "publint": "0.3.24",
+    "rollup": "4.63.1",
+    "typescript": "7.0.2",
+    "typescript-3-9": "npm:typescript@3.9.10",
+    "wcwidth-upstream": "npm:wcwidth@1.0.1"
+  },
+  "author": "Stackline maintainers",
+  "contributors": [
+    "Jun Woong (original wcwidth JavaScript port)"
+  ],
+  "homepage": "https://alexandro.net/docs/vanilla/wcwidth/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandroit/stackline-wcwidth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexandroit/stackline-wcwidth/issues"
+  }
+}

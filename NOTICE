@@ -1,0 +1,15 @@
+@stackline/wcwidth is an independently maintained compatibility continuation
+of wcwidth@1.0.1. It is not affiliated with or endorsed by Tim Oxley, Jun Woong,
+Markus Kuhn, the original project, or the Unicode Consortium.
+
+The historical JavaScript API and behavior derive from wcwidth, a JavaScript
+port by Jun Woong of Markus Kuhn's wcwidth implementation. The complete notice
+distributed with wcwidth 1.0.1 is preserved in THIRD_PARTY_LICENSES.md.
+
+Generated width, emoji, and grapheme tables use Unicode Character Database and
+emoji data version 17.0.0. Exact source URLs and SHA-256 digests are recorded in
+unicode-sources.json. The Unicode License V3 is reproduced in
+THIRD_PARTY_LICENSES.md.
+
+The maintained Unicode model, grapheme handling, module distribution, types,
+and dependency-free configuration implementation are Stackline work.
