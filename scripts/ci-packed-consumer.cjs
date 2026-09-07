@@ -41,7 +41,6 @@ try {
     "if(width('👨‍👩‍👧‍👦')!==2||config({control:-1})('a\\nb')!==-1||unicodeVersion!=='17.0.0')process.exit(2)"
   ].join(';')], {
     cwd: workspace,
-    shell: process.platform === 'win32',
     encoding: 'utf8'
   })
   if (esm.error) throw esm.error
@@ -52,7 +51,6 @@ try {
     "catch(error){if(error.code!=='ERR_PACKAGE_PATH_NOT_EXPORTED')throw error}"
   ].join(' ')], {
     cwd: workspace,
-    shell: process.platform === 'win32',
     encoding: 'utf8'
   })
   if (internal.error) throw internal.error
