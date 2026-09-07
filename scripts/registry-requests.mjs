@@ -17,6 +17,36 @@ export async function retryAttestationAudit(operation, { attempts = 24, wait = (
   }
 }
 
+export async function retryRegistryInstall(operation, {
+  packageName,
+  version,
+  attempts = 24,
+  wait = () => delay(5_000)
+} = {}) {
+  assert.equal(typeof packageName, 'string')
+  assert.equal(typeof version, 'string')
+  const identity = `${packageName}@${version}`
+  const registryPaths = [
+    encodeURIComponent(packageName),
+    encodeURIComponent(packageName).replace('%40', '@')
+  ].map((value) => `registry.npmjs.org/${value}`.toLowerCase())
+  let result
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    result = operation()
+    if (result?.status === 0) return result
+    const diagnostic = `${result?.stderr || ''}\n${result?.stdout || ''}`
+    const normalizedDiagnostic = diagnostic.toLowerCase()
+    const pending = /\bE404\b/.test(diagnostic) && (
+      registryPaths.some((registryPath) => normalizedDiagnostic.includes(registryPath)) ||
+      normalizedDiagnostic.includes(`requested resource '${identity}'`.toLowerCase())
+    )
+    if (!pending || attempt === attempts - 1) return result
+    console.log('npm package metadata is still propagating; retrying registry install.')
+    await wait()
+  }
+  return result
+}
+
 export async function publishedArtifactExists(metadata, bytes, fetcher = globalThis.fetch) {
   const response = await fetcher(`https://registry.npmjs.org/${encodeURIComponent(metadata.name)}/${metadata.version}`,
     { signal: globalThis.AbortSignal.timeout(30_000) })

@@ -40,6 +40,55 @@ test('attestation retries stop at the bound and do not retry unrelated 404s', as
   }), (error) => error === unrelated)
 })
 
+test('registry install recovers while first-version package metadata propagates', async () => {
+  const { retryRegistryInstall } = await helpers
+  let calls = 0
+  let waits = 0
+  const pendingInstall = {
+    status: 1,
+    stderr: 'npm error code E404\nGET https://registry.npmjs.org/@stackline%2fwcwidth - Not found',
+    stdout: ''
+  }
+  const success = { status: 0, stderr: '', stdout: 'added 1 package' }
+  const result = await retryRegistryInstall(() => ++calls < 3 ? pendingInstall : success, {
+    packageName: '@stackline/wcwidth',
+    version: '1.0.0',
+    attempts: 3,
+    wait: async () => { waits++ }
+  })
+  assert.equal(result, success)
+  assert.equal(calls, 3)
+  assert.equal(waits, 2)
+})
+
+test('registry install retry is bounded and ignores unrelated failures', async () => {
+  const { retryRegistryInstall } = await helpers
+  const pendingInstall = {
+    status: 1,
+    stderr: "npm error code E404\nThe requested resource '@stackline/wcwidth@1.0.0' could not be found",
+    stdout: ''
+  }
+  let calls = 0
+  const exhausted = await retryRegistryInstall(() => { calls++; return pendingInstall }, {
+    packageName: '@stackline/wcwidth',
+    version: '1.0.0',
+    attempts: 2,
+    wait: async () => {}
+  })
+  assert.equal(exhausted, pendingInstall)
+  assert.equal(calls, 2)
+
+  const unrelated = { status: 1, stderr: 'npm error code E503\nservice unavailable', stdout: '' }
+  calls = 0
+  const failed = await retryRegistryInstall(() => { calls++; return unrelated }, {
+    packageName: '@stackline/wcwidth',
+    version: '1.0.0',
+    wait: async () => assert.fail('unrelated failures must fail immediately')
+  })
+  assert.equal(failed, unrelated)
+  assert.equal(calls, 1)
+})
+
 test('resume requires matching registry metadata and actual tarball bytes', async () => {
   const { publishedArtifactExists } = await helpers
   const metadata = { name: '@stackline/wcwidth', version: '1.0.0' }

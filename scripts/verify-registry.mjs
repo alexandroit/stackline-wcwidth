@@ -5,7 +5,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import { setTimeout as delay } from 'node:timers/promises'
-import { retryAttestationAudit, validateProvenanceStatement } from './registry-requests.mjs'
+import { retryAttestationAudit, retryRegistryInstall, validateProvenanceStatement } from './registry-requests.mjs'
 
 const archive = path.resolve(process.argv[2])
 const localBytes = await readFile(archive)
@@ -78,11 +78,14 @@ try {
       private: true,
       dependencies: { [key]: spec }
     }))
-    const installed = spawnSync('npm', ['install', '--omit=dev', '--no-fund', '--registry', registry], {
-      cwd,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'pipe']
-    })
+    const installed = await retryRegistryInstall(
+      () => spawnSync('npm', ['install', '--omit=dev', '--no-fund', '--registry', registry], {
+        cwd,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe']
+      }),
+      { packageName: metadata.name, version: metadata.version }
+    )
     assert.equal(installed.status, 0, installed.stdout + installed.stderr)
     assert.doesNotMatch(installed.stdout + installed.stderr, /warn|deprecated|invalid|extraneous/i)
     const lock = JSON.parse(await readFile(path.join(cwd, 'package-lock.json'), 'utf8'))
