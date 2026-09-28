@@ -1,1 +1,1 @@
-npm install @stackline/wcwidth@1.0.0
+npm install @stackline/wcwidth@1.0.1

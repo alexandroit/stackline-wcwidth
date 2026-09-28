@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "wcwidth": "npm:@stackline/wcwidth@1.0.0"
+    "wcwidth": "npm:@stackline/wcwidth@1.0.1"
   }
 }

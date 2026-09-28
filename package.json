@@ -1,6 +1,6 @@
 {
   "name": "@stackline/wcwidth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Terminal column widths with modern Unicode grapheme support and wcwidth compatibility",
   "keywords": [
     "terminal",
@@ -8,7 +8,9 @@
     "width",
     "wcwidth",
     "grapheme",
-    "emoji"
+    "emoji",
+    "stackline",
+    "terminal-width"
   ],
   "license": "MIT",
   "type": "commonjs",

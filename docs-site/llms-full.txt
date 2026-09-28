@@ -1,6 +1,6 @@
-# @stackline/wcwidth@1.0.0
+# @stackline/wcwidth@1.0.1
 
-Alexandro.Net documents `@stackline/wcwidth@1.0.0`, an independently maintained,
+Alexandro.Net documents `@stackline/wcwidth@1.0.1`, an independently maintained,
 dependency-free compatibility continuation of `wcwidth@1.0.1`.
 
 ## Package identity
@@ -39,7 +39,7 @@ ANSI terminal escape sequences remain ordinary input and are not removed.
 
 Existing imports can remain unchanged through the exact alias:
 
-`wcwidth@npm:@stackline/wcwidth@1.0.0`
+`wcwidth@npm:@stackline/wcwidth@1.0.1`
 
 Downstreams should run a clean install and their ordinary tests, types, build,
 and snapshot checks. Width snapshots containing emoji, combining text, CJK, or

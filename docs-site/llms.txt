@@ -1,4 +1,4 @@
-# @stackline/wcwidth@1.0.0 on Alexandro.Net
+# @stackline/wcwidth@1.0.1 on Alexandro.Net
 
 - Canonical documentation: https://alexandro.net/docs/vanilla/wcwidth/
 - Source: https://github.com/alexandroit/stackline-wcwidth
@@ -12,7 +12,7 @@
 
 Identity-preserving npm alias:
 
-wcwidth@npm:@stackline/wcwidth@1.0.0
+wcwidth@npm:@stackline/wcwidth@1.0.1
 
 The package preserves the historical callable function and config object
 semantics while correcting terminal widths with current Unicode data. Combining
