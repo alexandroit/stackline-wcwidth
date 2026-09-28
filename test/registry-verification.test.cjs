@@ -61,6 +61,33 @@ test('registry install recovers while first-version package metadata propagates'
   assert.equal(waits, 2)
 })
 
+test('registry install recognizes both scoped URL spellings and unscoped packages', async () => {
+  const { retryRegistryInstall } = await helpers
+  for (const [packageName, registryPath] of [
+    ['@stackline/wcwidth', '%40stackline%2Fwcwidth'],
+    ['@stackline/wcwidth', '@stackline%2Fwcwidth'],
+    ['wcwidth', 'wcwidth']
+  ]) {
+    let calls = 0
+    let waits = 0
+    const missing = {
+      status: 1,
+      stderr: `npm error code E404\nGET https://registry.npmjs.org/${registryPath} - Not found`,
+      stdout: ''
+    }
+    const success = { status: 0, stderr: '', stdout: 'installed' }
+    const result = await retryRegistryInstall(() => ++calls === 1 ? missing : success, {
+      packageName,
+      version: '1.0.1',
+      attempts: 2,
+      wait: async () => { waits++ }
+    })
+    assert.equal(result, success, registryPath)
+    assert.equal(calls, 2, registryPath)
+    assert.equal(waits, 1, registryPath)
+  }
+})
+
 test('registry install recovers while a new version propagates into the package metadata', async () => {
   const { retryRegistryInstall } = await helpers
   let calls = 0

@@ -28,7 +28,8 @@ export async function retryRegistryInstall(operation, {
   const identity = `${packageName}@${version}`
   const registryPaths = [
     encodeURIComponent(packageName),
-    encodeURIComponent(packageName).replace('%40', '@')
+    // npm also spells the leading scope marker literally in registry errors.
+    encodeURIComponent(packageName).replace(/^%40/, '@')
   ].map((value) => `registry.npmjs.org/${value}`.toLowerCase())
   let result
   for (let attempt = 0; attempt < attempts; attempt++) {
