@@ -4,7 +4,7 @@
     {
       "name": "@stackline/wcwidth",
       "path": "README.md",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "baselineVersion": "1.0.0",
       "keywords": [
         "stackline",
@@ -21,8 +21,8 @@
       "homepage": "https://alexandro.net/docs/vanilla/wcwidth/",
       "baselineTarball": "https://registry.npmjs.org/@stackline/wcwidth/-/wcwidth-1.0.0.tgz",
       "baselineIntegrity": "sha512-aP/g+RmAIY2TRv+5pYFP7sZzZTfJQwILRp60KApGacuT3P3+Sh16csjuQzM/cV8bZAk4obpRWDWuJo1QMsSr3g==",
-      "expectedSha512": "2fd065b4f4bae66e84884534b77080914eba491c74d625bf8531eafd381407078cf81c7a854ab82f4fd3c7ed85bff1af890a91ea41e636a0270936510e0ecf05",
-      "tag": "docs-stackline-wcwidth-v1.0.1"
+      "expectedSha512": "a3462bc55ccf0b73a121003552a782e45311deb17d52ad05fea0f07a2d66273f52a5059d4ff56833b3f0d548f4b437aa428d6fc38c0d06db056660480857e0aa",
+      "tag": "docs-stackline-wcwidth-v1.0.2"
     }
   ]
 }
