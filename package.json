@@ -3,14 +3,16 @@
   "version": "1.0.1",
   "description": "Terminal column widths with modern Unicode grapheme support and wcwidth compatibility",
   "keywords": [
+    "stackline",
+    "npm-package",
+    "wcwidth",
+    "typescript",
+    "nodejs",
     "terminal",
     "unicode",
     "width",
-    "wcwidth",
     "grapheme",
-    "emoji",
-    "stackline",
-    "terminal-width"
+    "emoji"
   ],
   "license": "MIT",
   "type": "commonjs",
