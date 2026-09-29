@@ -1,0 +1,28 @@
+{
+  "repository": "alexandroit/stackline-wcwidth",
+  "packages": [
+    {
+      "name": "@stackline/wcwidth",
+      "path": "README.md",
+      "version": "1.0.1",
+      "baselineVersion": "1.0.0",
+      "keywords": [
+        "stackline",
+        "npm-package",
+        "wcwidth",
+        "typescript",
+        "nodejs",
+        "terminal",
+        "unicode",
+        "width",
+        "grapheme",
+        "emoji"
+      ],
+      "homepage": "https://alexandro.net/docs/vanilla/wcwidth/",
+      "baselineTarball": "https://registry.npmjs.org/@stackline/wcwidth/-/wcwidth-1.0.0.tgz",
+      "baselineIntegrity": "sha512-aP/g+RmAIY2TRv+5pYFP7sZzZTfJQwILRp60KApGacuT3P3+Sh16csjuQzM/cV8bZAk4obpRWDWuJo1QMsSr3g==",
+      "expectedSha512": "2fd065b4f4bae66e84884534b77080914eba491c74d625bf8531eafd381407078cf81c7a854ab82f4fd3c7ed85bff1af890a91ea41e636a0270936510e0ecf05",
+      "tag": "docs-stackline-wcwidth-v1.0.1"
+    }
+  ]
+}
