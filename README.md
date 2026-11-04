@@ -10,7 +10,7 @@
 
 **[Documentation](https://alexandro.net/docs/vanilla/wcwidth/)** | **[npm](https://www.npmjs.com/package/@stackline/wcwidth)** | **[Issues](https://github.com/alexandroit/stackline-wcwidth/issues)** | **[Repository](https://github.com/alexandroit/stackline-wcwidth)**
 
-**Current package version:** `1.0.2`
+**Current package version:** `1.0.4`
 
 ---
 
@@ -26,7 +26,7 @@ endorsed by Tim Oxley, Jun Woong, Markus Kuhn, or the Unicode Consortium.
 
 | Item | Value |
 | --- | --- |
-| Package | `@stackline/wcwidth@1.0.2` |
+| Package | `@stackline/wcwidth@1.0.4` |
 | Node.js runtime | `>=18.0.0` |
 | CommonJS / primary entry | `./index.js` |
 | ES module entry | `./dist/index.mjs` |

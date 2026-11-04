@@ -117,6 +117,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
         shell: bash
         run: test -n "$NODE_AUTH_TOKEN"
+      - name: Verify README version in the exact publish artifact
+        if: steps.registry.outputs.published != 'true'
+        run: python3 .github/scripts/check-release-readme.py artifact/*.tgz
+
       - name: Publish the exact CI tarball with OIDC and provenance
         if: steps.registry.outputs.published == 'false' && steps.registry.outputs.package_exists == 'true' && inputs.bootstrap == false
         run: npm publish ./artifact/*.tgz --access public --provenance --ignore-scripts
