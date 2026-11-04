@@ -1,6 +1,6 @@
 {
   "name": "@stackline/wcwidth",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Terminal column widths with modern Unicode grapheme support and wcwidth compatibility",
   "keywords": [
     "stackline",
@@ -113,9 +113,10 @@
     "audit:dependencies": "npm audit --omit=dev --audit-level=low",
     "audit:all": "npm audit --audit-level=low",
     "audit:signatures": "npm audit signatures",
-    "verify": "npm run clean && npm run lint && npm run build && npm run docs:prepare && npm run docs:check && npm run unicode:check && npm test && npm run test:coverage && npm run test:smoke && npm run test:closure && npm run check:package && npm run check:licenses && npm run check:sbom && npm run check:release && npm run pack:check && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
+    "verify": "npm run clean && npm run lint && npm run build && npm run test:build-security && npm run docs:prepare && npm run docs:check && npm run unicode:check && npm test && npm run test:coverage && npm run test:smoke && npm run test:closure && npm run check:package && npm run check:licenses && npm run check:sbom && npm run check:release && npm run pack:check && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
     "artifact:prepare": "node scripts/create-artifact.mjs",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "test:build-security": "node scripts/test-build-security.mjs"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -149,5 +150,12 @@
   },
   "bugs": {
     "url": "https://github.com/alexandroit/stackline-wcwidth/issues"
+  },
+  "overrides": {
+    "glob@>=9 <14.0.3": "14.0.3",
+    "minimatch@>=7 <11.0.4": "11.0.4",
+    "@rollup/plugin-node-resolve": {
+      "deepmerge": "npm:@stackline/deepmerge@1.1.0"
+    }
   }
 }

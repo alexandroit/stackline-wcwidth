@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url'
 
 const sourceSiteDir = path.dirname(fileURLToPath(import.meta.url))
 const projectDir = path.resolve(sourceSiteDir, '..')
+const packageJson = JSON.parse(await readFile(path.join(projectDir, 'package.json'), 'utf8'))
+const renderVersion = (source) => source.replaceAll('{{PACKAGE_VERSION}}', packageJson.version)
 const destination = path.join(sourceSiteDir, 'dist')
 const siteFiles = ['index.html', 'styles.css', 'app.js', 'robots.txt', 'sitemap.xml', 'llms.txt', 'llms-full.txt', 'package-meta.json']
 const rootFiles = ['README.md', 'CHANGELOG.md', 'COMPATIBILITY.md', 'COMPATIBILITY_CONTRACT.md', 'CONTRIBUTING.md', 'LICENSE', 'MIGRATION.md', 'NOTICE', 'PUBLISHING.md', 'SECURITY.md', 'THIRD_PARTY_LICENSES.md', 'VERIFICATION.md']
@@ -30,9 +32,10 @@ let staging = await mkdtemp(path.join(sourceSiteDir, '.dist-staging-'))
 try {
   await chmod(staging, 0o755)
   for (const siteFile of siteFiles.filter((name) => name !== 'index.html')) {
-    await copyRegularFile(path.join(sourceSiteDir, siteFile), path.join(staging, siteFile))
+    const source = await readFile(path.join(sourceSiteDir, siteFile), 'utf8')
+    await writeFile(path.join(staging, siteFile), renderVersion(source), { mode: 0o644 })
   }
-  let html = await readFile(path.join(sourceSiteDir, 'index.html'), 'utf8')
+  let html = renderVersion(await readFile(path.join(sourceSiteDir, 'index.html'), 'utf8'))
   for (const [token, filename] of Object.entries(exampleFiles)) {
     const source = (await readFile(path.join(projectDir, 'examples', filename), 'utf8')).trimEnd()
     assert(html.includes(token), `documentation template is missing ${token}`)

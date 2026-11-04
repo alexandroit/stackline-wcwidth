@@ -69,7 +69,7 @@ includesAll(html, [
   'aria-live="polite"',
   '<caption>'
 ], 'index.html')
-for (const token of ['{{EXAMPLE_INSTALL}}', '{{EXAMPLE_COMMONJS}}', '{{EXAMPLE_ESM}}', '{{EXAMPLE_ALIAS}}']) {
+for (const token of ['{{PACKAGE_VERSION}}', '{{EXAMPLE_INSTALL}}', '{{EXAMPLE_COMMONJS}}', '{{EXAMPLE_ESM}}', '{{EXAMPLE_ALIAS}}']) {
   assert(!html.includes(token), `prepared package page contains unresolved token: ${token}`)
 }
 for (const filename of ['install.sh', 'commonjs.cjs', 'esm.mjs', 'legacy-alias.json']) {

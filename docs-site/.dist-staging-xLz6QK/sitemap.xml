@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/README.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/CHANGELOG.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/COMPATIBILITY.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/COMPATIBILITY_CONTRACT.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/CONTRIBUTING.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/LICENSE</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/MIGRATION.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/NOTICE</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/PUBLISHING.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/SECURITY.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/THIRD_PARTY_LICENSES.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/VERIFICATION.md</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/package-meta.json</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/llms.txt</loc></url>
+  <url><loc>https://alexandro.net/docs/vanilla/wcwidth/llms-full.txt</loc></url>
+</urlset>

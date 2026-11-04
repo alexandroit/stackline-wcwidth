@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+- Replace Rollup node-resolve's vulnerable deepmerge with the published @stackline/deepmerge 1.1.0 through a parent-scoped override and test the actual resolver against prototype poisoning.
+- Update supported Node.js security pins and synchronize documentation and install examples with the release version.
+
 ## [1.0.1] - 2026-09-28
 
 - Organize package documentation, preserve API and migration examples, and add Stackline community links.
